@@ -24,11 +24,6 @@ anion_r_nm=$(echo ${current_anion[0]} | awk '{print $2}') #in nm
 impurity_name=$(echo ${current_impurity[0]} | awk '{print $1}')
 impurity_r_nm=$(echo ${current_impurity[0]} | awk '{print $2}') #in nm
 
-combination_name=$(echo ${current_combination[0]} | awk '{print $1"-"$2"-"$3}')
-cation_num=$(echo ${current_combination[0]} | awk '{print $1}')
-anion_num=$(echo ${current_combination[0]} | awk '{print $2}')
-impurity_num=$(echo ${current_combination[0]} | awk '{print $3}')
-
 temperature_name=$(echo ${current_temperature[0]} | awk '{print $1}')
 version_name=$(echo ${current_version[0]} | awk '{print $1}')
 replica_name=$(echo ${current_replica[0]} | awk '{print $1}')
@@ -44,7 +39,7 @@ end=$(echo ${current_duration_NPT[0]} | awk '{print $2}')
 dt=$(echo ${current_duration_NPT[0]} | awk '{print $3}')
 
 # Define path for storing configurations / simulation data
-fullpath=$particle_name/$cation_name/$anion_name/$impurity_name/$combination_name/$temperature_name/$version_name/$replica_name
+fullpath=$particle_name/$cation_name/$anion_name/$temperature_name/$version_name/$replica_name
 
 echo $dir_experiments
 mkdir -p $dir_experiments/$fullpath
@@ -65,9 +60,6 @@ sed -i 's/SED_cation_num_SED/'$cation_num'/g' packmol.inp
 sed -i 's/SED_anion_name_SED/'$anion_name'/g' packmol.inp
 sed -i 's/SED_anion_num_SED/'$anion_num'/g' packmol.inp
 
-sed -i 's/SED_impurity_name_SED/'$impurity_name'/g' packmol.inp
-sed -i 's/SED_impurity_num_SED/'$impurity_num'/g' packmol.inp
-
 sed -i 's/SED_xbox_SED/'$xbox'/g' packmol.inp
 sed -i 's/SED_ybox_SED/'$ybox'/g' packmol.inp
 sed -i 's/SED_zbox_SED/'$zbox'/g' packmol.inp
@@ -84,8 +76,6 @@ a $cation_name
 name 1 Cation
 a $anion_name
 name 2 Anion
-a $impurity_name
-name 3 Impurity
 q
 EOF
 
@@ -122,4 +112,3 @@ mdrun -deffnm NPT_highpressure -nt 1 -v
 #grompp -f 2_NPT.mdp -c NPT_highpressure.gro -p topol_local.top -n index_bulk.ndx -o NPT
 #rm mdout.mdp
 #mdrun -deffnm NPT -nt 1 -v
-
