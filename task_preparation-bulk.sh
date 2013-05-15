@@ -55,10 +55,10 @@ seed=${seeds[$replica_name]}
 sed -i 's/SED_seed_SED/'$seed'/g' packmol.inp
 
 sed -i 's/SED_cation_name_SED/'$cation_name'/g' packmol.inp
-sed -i 's/SED_cation_num_SED/'$cation_num'/g' packmol.inp
+sed -i 's/SED_cation_num_SED/'$numionpairs'/g' packmol.inp
 
 sed -i 's/SED_anion_name_SED/'$anion_name'/g' packmol.inp
-sed -i 's/SED_anion_num_SED/'$anion_num'/g' packmol.inp
+sed -i 's/SED_anion_num_SED/'$numionpairs'/g' packmol.inp
 
 sed -i 's/SED_xbox_SED/'$xbox'/g' packmol.inp
 sed -i 's/SED_ybox_SED/'$ybox'/g' packmol.inp
@@ -81,33 +81,31 @@ EOF
 
 echo 'Start converting the mdp input files ...'
 sed 's/SED_temperature_name_SED/'$temperature_name'/g' 0_Bulk_STEEP_emptyTemp.mdp > 0_STEEP.mdp
-sed -i 's/SED_energygrps_SED/Cation Anion Impurity/g' 0_STEEP.mdp
+sed -i 's/SED_energygrps_SED/Cation Anion/g' 0_STEEP.mdp
 sed 's/SED_temperature_name_SED/'$temperature_name'/g' 1_Bulk_NPT_highpressure_emptyTemp.mdp > 1_NPT_highpressure.mdp
-sed -i 's/SED_energygrps_SED/Cation Anion Impurity/g' 1_NPT_highpressure.mdp
+sed -i 's/SED_energygrps_SED/Cation Anion/g' 1_NPT_highpressure.mdp
 sed 's/SED_temperature_name_SED/'$temperature_name'/g' 2_Bulk_NPT_emptyTemp.mdp > 2_NPT.mdp
-sed -i 's/SED_energygrps_SED/Cation Anion Impurity/g' 2_NPT.mdp
+sed -i 's/SED_energygrps_SED/Cation Anion/g' 2_NPT.mdp
 
 echo 'Start converting the topology files ...'
 sed 's+SED_dir_systempreparation_SED+'$dir_systempreparation'+g' topol_local_bulk.top > topol_local.top
 sed -i 's+SED_dir_gromacs_SED+'$dir_gromacs'+g' topol_local.top
 sed -i 's/SED_cation_name_SED/'$cation_name'/g' topol_local.top
-sed -i 's/SED_cation_num_SED/'$cation_num'/g' topol_local.top
+sed -i 's/SED_cation_num_SED/'$numionpairs'/g' topol_local.top
 sed -i 's/SED_anion_name_SED/'$anion_name'/g' topol_local.top
-sed -i 's/SED_anion_num_SED/'$anion_num'/g' topol_local.top
-sed -i 's/SED_impurity_name_SED/'$impurity_name'/g' topol_local.top
-sed -i 's/SED_impurity_num_SED/'$impurity_num'/g' topol_local.top
+sed -i 's/SED_anion_num_SED/'$numionpairs'/g' topol_local.top
 
 echo 'Move all files to the experiment directory ...'
 mv packmol.gro index_bulk.ndx 0_STEEP.mdp 1_NPT_highpressure.mdp 2_NPT.mdp topol_local.top $dir_experiments/$fullpath
 
-echo 'Compile (grompp) the setup files and run energy minimization ...'
-cd $dir_experiments/$fullpath
-grompp -f 0_STEEP.mdp -c packmol.gro -p topol_local.top -n index_bulk.ndx -o STEEP
-rm mdout.mdp
-mdrun -deffnm STEEP -nt 1
-grompp -f 1_NPT_highpressure.mdp -c STEEP.gro -p topol_local.top -n index_bulk.ndx -o NPT_highpressure
-rm mdout.mdp
-mdrun -deffnm NPT_highpressure -nt 1 -v 
+#echo 'Compile (grompp) the setup files and run energy minimization ...'
+#cd $dir_experiments/$fullpath
+#grompp -f 0_STEEP.mdp -c packmol.gro -p topol_local.top -n index_bulk.ndx -o STEEP
+#rm mdout.mdp
+#mdrun -deffnm STEEP -nt 1
+#grompp -f 1_NPT_highpressure.mdp -c STEEP.gro -p topol_local.top -n index_bulk.ndx -o NPT_highpressure
+#rm mdout.mdp
+#mdrun -deffnm NPT_highpressure -nt 1 -v 
 # Takes to long, moved to task_running-bulk-impurity.sh
 #grompp -f 2_NPT.mdp -c NPT_highpressure.gro -p topol_local.top -n index_bulk.ndx -o NPT
 #rm mdout.mdp

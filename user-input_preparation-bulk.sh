@@ -5,7 +5,7 @@
 
 inputlists_folder=inputlists_preparation-bulk
 
-inputlists=(particle.list cation.list anion.list boxsize.list temperature.list version.list replica.list)
+inputlists=(particle.list cation.list anion.list numberofionpairs.list boxsize.list temperature.list version.list replica.list)
 
 #sysprepfiles=(packmol_bulk.inp topol_local_bulk.top 0_Bulk_STEEP.mdp 1_Bulk_NPT_highpressure.mdp 2_Bulk_NPT.mdp)
 
@@ -16,9 +16,9 @@ tasks=task_preparation-bulk.sh
 currentdir=$(pwd)
 
 dir_systempreparation=$currentdir/sysprep
-dir_experiments=../Experiments
-dir_analysis=../Analysis
+dir_experiments=/home/vladislav/Desktop/NaRIBaS/Experiments
+dir_analysis=/home/vladislav/Desktop/NaRIBaS/Analysis
 
-dir_packmol=/home/vladislav/Ubuntu One/scripts/packmol
+dir_packmol=/home/vladislav/Documents
 dir_gromacs=/opt/gromacs-4.6/share/gromacs
 

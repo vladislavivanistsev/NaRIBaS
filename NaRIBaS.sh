@@ -7,6 +7,12 @@ if [ "$1" == 'gui' ]; then
 
 else
 
+#+++ Bulk simulations, preparation and analysis +++
+
+#+++ Neat Ionic liquid +++
+#+ Prepare simulations of bulk coarse grained ionic liquid
+./_main.sh user-input_preparation-bulk.sh
+
 # Add here the input file TEST_user-input_*.sh
 #read -p "Press enter to continue..." # allows to generate a break (e.g. to check the output of a former step) and proceed after enter is pressed).
 
