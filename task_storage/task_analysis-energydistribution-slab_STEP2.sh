@@ -1,0 +1,106 @@
+#!/bin/bash
+
+# Place to add code
+
+# Some basic functions to access the data
+
+#echo ${concentration[*]} # All elements of the array
+#echo ${concentration[9]} # Element number 10 (counter starts at 0)
+#numberofitems=${#concentration[*]} # calculate the number of elements in array
+#echo $numberofitems
+#echo ${concentration[1]} | awk '{print $1}' # Access the data that is stored within an element array
+#echo '-----'
+#print_current_setup
+
+# Transfer list entries to bash variables
+particle_name=$(echo ${current_particle[0]} | awk '{print $1}')
+xbox_nm=$(echo ${current_particle[0]} | awk '{print $2}') #in nm
+ybox_nm=$(echo ${current_particle[0]} | awk '{print $3}') #in nm
+r_wall_nm=$(echo ${current_particle[0]} | awk '{print $4}') #in nm
+electrodeatoms=$(echo ${current_particle[0]} | awk '{print $5}')
+
+cation_name=$(echo ${current_cation[0]} | awk '{print $1}')
+r_cation_nm=$(echo ${current_cation[0]} | awk '{print $2}') #in nm
+
+anion_name=$(echo ${current_anion[0]} | awk '{print $1}')
+r_anion_nm=$(echo ${current_anion[0]} | awk '{print $2}') #in nm
+
+impurity_name=$(echo ${current_impurity[0]} | awk '{print $1}')
+temperature_name=$(echo ${current_temperature[0]} | awk '{print $1}')
+version_name=$(echo ${current_version[0]} | awk '{print $1}')
+surfacecharge_name=$(echo ${current_surfacecharge[0]} | awk '{print $1}')
+replica_name=$(echo ${current_replica[0]} | awk '{print $1}')
+
+duration_name=$(echo ${current_duration_NVT[0]} | awk '{print $1"-"$2}')
+duration_begin=$(echo ${current_duration_NVT[0]} | awk '{print $1}')
+duration_end=$(echo ${current_duration_NVT[0]} | awk '{print $2}')
+
+# Define path for storing configurations / simulation data
+fullpath=$particle_name/$cation_name/$anion_name/$impurity_name/$temperature_name/$version_name/$surfacecharge_name/$replica_name
+fullpath2simulate=$particle_name'+'$cation_name'+'$anion_name'+'$impurity_name'+'$version_name
+
+cd $dir_analysis/$fullpath/energydistribution
+
+pwd
+
+# simply plot the files given in the path
+plotdata=energy_toplot.dat
+
+# That the legend. Should look like: "y plot1 x plot2 x plot3" if plotting is used later
+legend='{\itE_{total}}(kJ/mol)'
+legend=$legend' t(ps)'
+
+cp energy.dat $plotdata
+
+# Append legend
+echo $legend > tmp.dat; cat $plotdata >> tmp.dat; mv tmp.dat $plotdata
+
+ncols=1
+ncols=$(($ncols*2))
+
+# Edit the Matlab function to plot all replicas in one figure
+sed 's+SED_dir_scripts_SED+'$currentdir'/source+g' $currentdir/source/basic_plotting.m > basic_plotting.m
+sed -i 's/SED_plotfile_SED/'$plotdata'/g' basic_plotting.m
+sed -i 's/SED_title_SED/''/g' basic_plotting.m
+sed -i 's/SED_savename_SED/'$plotdata'/g' basic_plotting.m
+
+# Run matlab
+$matlabdir/matlab -nodisplay -nosplash -r  "basic_plotting($ncols)"
+
+# Edit the Matlab function to plot all replicas in one figure
+sed 's+SED_dir_scripts_SED+'$currentdir'/source+g' $currentdir/source/basic_plotting_xlim.m > basic_plotting_xlim.m
+sed -i 's/SED_plotfile_SED/'$plotdata'/g' basic_plotting_xlim.m
+sed -i 's/SED_title_SED/'$energy_name'/g' basic_plotting_xlim.m
+sed -i 's/SED_savename_SED/inset+'$plotdata'/g' basic_plotting_xlim.m
+sed -i 's/SED_xlim_SED/'$duration_begin' '$duration_end'/g' basic_plotting_xlim.m
+
+# Run matlab
+$matlabdir/matlab -nodisplay -nosplash -r  "basic_plotting_xlim($ncols)"
+
+
+# simply plot the files given in the path
+plotdata=distr_toplot.dat
+
+# That the legend. Should look like: "y plot1 x plot2 x plot3" if plotting is used later
+legend='P({\itE_{total}})'
+legend=$legend' {\itE_{total}}(kJ/mol)'
+
+cp distr.dat $plotdata
+
+# Append legend
+echo $legend > tmp.dat; cat $plotdata >> tmp.dat; mv tmp.dat $plotdata
+
+ncols=1
+ncols=$(($ncols*2))
+
+# Edit the Matlab function to plot all replicas in one figure
+sed 's+SED_dir_scripts_SED+'$currentdir'/source+g' $currentdir/source/basic_plotting.m > basic_plotting.m
+sed -i 's/SED_plotfile_SED/'$plotdata'/g' basic_plotting.m
+sed -i 's/SED_title_SED/''/g' basic_plotting.m
+sed -i 's/SED_savename_SED/'$plotdata'/g' basic_plotting.m
+
+# Run matlab
+$matlabdir/matlab -nodisplay -nosplash -r  "basic_plotting($ncols)"
+
+#read -p 'Press Enter to continue...'
+

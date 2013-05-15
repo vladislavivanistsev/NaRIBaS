@@ -1,0 +1,5 @@
+version 
+a : Surface tension with 35 nm vacuum slab
+b : Surface tension with 15 nm vacuum slab
+c : Surface tension with 35 nm vacuum slab and ions box set 10 nm away from the simulation box border
+d : Surface tension with 15 nm vacuum slab and ions box set 10 nm away from the simulation box border

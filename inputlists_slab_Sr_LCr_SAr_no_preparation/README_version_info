@@ -1,0 +1,6 @@
+a - slab with fixed density and geometric combination rule
+b - slab with temperature dependend density and arithmetic combination rule
+c - slab with fixed density and arithmetic combination rule
+d - slab with fixed density and arithmetic combination rule - T-REMD
+e - slab with fixed density and arithmetic combination rule - sigma-REMD
+f - slab with fixed density and arithmetic combination rule - temperature coupling only for wall atoms

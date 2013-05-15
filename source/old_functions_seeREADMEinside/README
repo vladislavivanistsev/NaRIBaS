@@ -1,0 +1,7 @@
+All functions stored in this folder have been used during the development of NaRIBaS and the final plotting routine 
+
+basic_plotting_alloptions.m
+
+Do not delete any of these files until you are sure, that they are no longer required. 
+
+Especially all task lists stored in the task_storage/ should be updated before deleting these files!

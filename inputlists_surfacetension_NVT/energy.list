@@ -1,0 +1,4 @@
+volume {\itV}(m^3/mol)
+thermalexpansion {\alpha}_P(1/K)
+compressibility {\kappa}(J/m^3)
+adiabaticbulkmodulus {\itK_S}(m^3/J)

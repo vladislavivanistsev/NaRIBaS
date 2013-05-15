@@ -1,0 +1,4 @@
+firstlayer+sigma {\itN}_{ion}^{1.peak} \kappa
+minposition+firstlayer+sigma {\itz}^{1.min}(nm) \kappa
+minheight+firstlayer+sigma {\rho}_{N}^{1.min}(nm^{-3}) \kappa
+maxwidth+firstlayer+sigma {\itFWHM}^{1.max}(nm) \kappa

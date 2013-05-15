@@ -1,0 +1,24 @@
+#
+# Simulation box: Bulk, Ionic liquid (cation, anion), Impurity
+#
+
+tolerance 2.0
+filetype pdb
+output packmol.pdb
+seed SED_seed_SED
+add_box_sides 
+
+structure SED_dir_systempreparation_SED/top/SED_cation_name_SED.pdb 
+  number SED_cation_num_SED
+  inside box 0.0 0.0 0.0 SED_xbox_SED SED_ybox_SED SED_zbox_SED
+end structure
+
+structure SED_dir_systempreparation_SED/top/SED_anion_name_SED.pdb 
+  number SED_anion_num_SED
+  inside box 0.0 0.0 0.0 SED_xbox_SED SED_ybox_SED SED_zbox_SED
+end structure
+
+structure SED_dir_systempreparation_SED/top/SED_impurity_name_SED.pdb 
+  number SED_impurity_num_SED
+  inside box 0.0 0.0 0.0 SED_xbox_SED SED_ybox_SED SED_zbox_SED
+end structure

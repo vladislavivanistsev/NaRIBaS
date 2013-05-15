@@ -1,0 +1,76 @@
+; VARIOUS PREPROCESSING OPTIONS
+;title                    = Slab geometry + periodic molecule
+;cpp                      = /lib/cpp  
+
+; RUN CONTROL PARAMETERS
+integrator               = md
+tinit                    = 000
+dt                       = 0.01   ; ps
+nsteps                   = 3500000 ; 35ns
+comm-mode                = Linear  ;
+; number of steps for center of mass motion removal
+ nstcomm                  = 1
+; group(s) for center of mass motion removal
+define                   = -DPOSRES
+energy_grps =  Cation Anion Cathode Anode
+
+;annealing                = single
+;annealing_npoints        = 2
+;annealing_time           =  0 1000 ; ps
+;annealing_temp           = 700 350  ; K
+
+; OUTPUT CONTROL OPTIONS
+nstxout                  = 50000
+nstvout                  = 50000
+nstfout                  = 0
+nstlog                   = 500
+nstenergy                = 500
+nstxtcout                = 500
+xtc_precision            = 1000
+xtc_grps = Cation Anion
+
+; NEIGHBORSEARCHING PARAMETERS
+nstlist                  = 10       ; neighbor list
+ns_type                  = grid  
+pbc                      = xyz
+periodic_molecules       = yes
+rlist                    = 2.9 ;
+
+; OPTIONS FOR ELECTROSTATICS AND VDW
+coulombtype              = PME
+rcoulomb                 = 2.9 ; 3.0
+vdw_type                 = Shift
+rvdw                     = 2.6 ;1.0
+fourierspacing           = 0.112 ; nm
+pme_order                = 4
+ewald_rtol               = 1e-05
+ewald_geometry           = 3dc
+optimize_fft             = yes
+
+; OPTIONS FOR WEAK COUPLING ALGORITHMS
+tcoupl                   = v-rescale
+tc_grps                  = Cation Anion Cathode Anode
+ref_t                    =  SED_temperature_name_SED SED_temperature_name_SED SED_temperature_name_SED SED_temperature_name_SED
+tau_t                    =  0.0 0.0 2.0 2.0
+
+Pcoupl                   = no; Parrinello-Rahman ;Berendsen
+Pcoupltype               = isotropic
+tau_p                    = 0.5
+compressibility          = 4.5e-5 ; 1e-5 0 0 0
+ref_p                    = 1.0      ; bar
+
+; GENERATE VELOCITIES FOR STARTUP RUN
+gen_vel                  = no
+gen_temp                 = SED_temperature_name_SED
+gen_seed                 = 473529
+
+; OPTIONS FOR BONDS    
+constraints              = hbonds
+constraint_algorithm     = lincs
+unconstrained_start      = no
+shake_tol                = 0.00001
+lincs_order              = 4
+lincs_warnangle          = 30
+morse                    = no
+lincs_iter               = 2
+

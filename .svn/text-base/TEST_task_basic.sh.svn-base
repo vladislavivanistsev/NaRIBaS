@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Test for creating the folder structure
+
+a_name=$(echo ${current_a[0]} | awk '{print $1}')
+b_name=$(echo ${current_b[0]} | awk '{print $1}')
+c_name=$(echo ${current_c[0]} | awk '{print $1"-"$2}')
+d_name=$(echo ${current_d[0]} | awk '{print $1}')
+
+fullpath=$a_name/$b_name/$c_name/$d_name
+echo $fullpath
