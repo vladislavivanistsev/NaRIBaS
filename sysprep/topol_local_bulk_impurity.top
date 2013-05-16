@@ -35,3 +35,4 @@ Lennard Jones spheres in Bulk
 [ molecules ]                          
  SED_cation_name_SED SED_cation_num_SED
  SED_anion_name_SED SED_anion_num_SED
+ SED_impurity_name_SED SED_impurity_num_SED

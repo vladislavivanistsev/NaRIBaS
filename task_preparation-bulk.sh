@@ -44,6 +44,8 @@ fullpath=$particle_name/$cation_name/$anion_name/$temperature_name/$version_name
 echo $dir_experiments
 mkdir -p $dir_experiments/$fullpath
 
+###### START COMMENT
+:<<COMMENT1
 cd $dir_systempreparation
 
 echo 'Start converting the packmol input file packmol.inp ...'
@@ -98,10 +100,15 @@ sed -i 's/SED_anion_num_SED/'$numionpairs'/g' topol_local.top
 echo 'Move all files to the experiment directory ...'
 mv packmol.gro index_bulk.ndx 0_STEEP.mdp 1_NPT_highpressure.mdp 2_NPT.mdp topol_local.top $dir_experiments/$fullpath
 
-#echo 'Compile (grompp) the setup files and run energy minimization ...'
-#cd $dir_experiments/$fullpath
-#grompp -f 0_STEEP.mdp -c packmol.gro -p topol_local.top -n index_bulk.ndx -o STEEP
-#rm mdout.mdp
+COMMENT1
+###### END COMMENT
+
+echo 'Compile (grompp) the setup files and run energy minimization ...'
+cd $dir_experiments/$fullpath
+grompp -f 0_STEEP.mdp -c packmol.gro -p topol_local.top -n index_bulk.ndx -o STEEP
+rm mdout.mdp
+mpirun -np 4 mdrun_mpi -deffnm STEEP -maxh 24
+
 #mdrun -deffnm STEEP -nt 1
 #grompp -f 1_NPT_highpressure.mdp -c STEEP.gro -p topol_local.top -n index_bulk.ndx -o NPT_highpressure
 #rm mdout.mdp

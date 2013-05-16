@@ -16,14 +16,14 @@
 1		2		yes		0.5	0.5 ; arithmetic average
 
 ;;; LOAD ATOM TYPES
-#include "SED_dir_systempreparation_SED/top/LJSpheres_AtTy.itp"
+#include "/home/vladislav/Desktop/NaRIBaS/NaRIBaS/sysprep/top/LJSpheres_AtTy.itp"
 
 ;;; LOAD OPLS FF
-#include "SED_dir_gromacs_SED/top/oplsaa.ff/ffnonbonded.itp"
-#include "SED_dir_gromacs_SED/top/oplsaa.ff/ffbonded.itp"
+#include "/opt/gromacs-4.6/share/gromacs/top/oplsaa.ff/ffnonbonded.itp"
+#include "/opt/gromacs-4.6/share/gromacs/top/oplsaa.ff/ffbonded.itp"
 
 ;;; LOAD MOLECULES *.itp
-#include "SED_dir_systempreparation_SED/top/LJSpheres.itp"
+#include "/home/vladislav/Desktop/NaRIBaS/NaRIBaS/sysprep/top/LJSpheres.itp"
 
 ; Include water topology
 ;#include "spce.itp"
@@ -33,5 +33,5 @@
 Lennard Jones spheres in Bulk
                                        
 [ molecules ]                          
- SED_cation_name_SED SED_cation_num_SED
- SED_anion_name_SED SED_anion_num_SED
+ LCr 880
+ MAr 880
